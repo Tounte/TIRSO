@@ -1,0 +1,79 @@
+{%extends 'base.html'%}
+{% block navbar %}
+
+<nav class="navbar navbar-custom navbar-expand-lg ">
+    <a class="navbar-brand" href="#">
+        <img src="/static/img/logo.png" width="200" height="40" class="d-inline-block align-top" alt="">
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="/etat_stock">ETAT DU STOCK <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " href="/reception">RECEPTION</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/livraison">LIVRAISON</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/avaries">AVARIES</a>
+          </li>
+         
+        </ul>
+        
+    </div>
+    <ul class="navbar-nav">
+      {% if user.is_authenticated %}
+      <li class="nav-item ">
+        <a class="nav-link">USER: {{user.username}}</a>
+      </li>
+      <li class="nav-item ">
+        
+        <a class="nav-link" href="{% url 'logout' %}">| LOGOUT</a>
+
+      </li>
+      {%endif%}
+    </ul>
+</nav>
+{% endblock navbar %}
+
+
+{%block content %}
+<div>
+    <br />
+
+    <table class="table table-bordered" id="example">
+        <thead class="table-success" >
+            <tr>
+                <th>N°</th>
+                <th>8 Caractères</th>
+                <th>Châssis</th>
+                <th>Modèle</th>
+                <th>Boxage</th>
+                <th>IMMAT/VO</th>
+                <th>Date d'entrée</th>
+                <th>Categorie</th>
+                <th>Kélometrage</th>
+            </tr>
+        </thead>
+        <!-- Data from back-end -->
+        {% for stock_list in stocks %}
+        <tr>
+            <td>{{stock_list.id}}</td>
+            <td>{{stock_list.caracteres}}</td>
+            <td>{{stock_list.chassis}}</td>
+            <td>{{stock_list.modele}}</td>
+            <td>{{stock_list.boxage}}</td>
+            <td>{{stock_list.immat}}</td>
+            <td>{{stock_list.date|date:"d/m/Y"}}</td>
+            <td>{{stock_list.categorie}}</td>
+            <td>{{stock_list.kilometrage}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div> <!-- End container -->
+
+<br /><br />
+
+{% endblock content%}
